@@ -53,12 +53,13 @@ public class DataGui extends JFrame {
     private JMenuItem mniSaveFile;
     private JMenuItem mniLoadFile;
     private JMenuItem mniDbSettings;
+    private JMenuItem mniInfo;
     private JMenu menu;
 
     private JMenuBar getTopMenuBar() {
         if (this.topMenuBar == null) {
             this.topMenuBar = new JMenuBar();
-            this.topMenuBar.add(getMenu());
+            this.topMenuBar.add(this.getMenu());
         }
         return this.topMenuBar;
     }
@@ -107,12 +108,26 @@ public class DataGui extends JFrame {
         return this.mniDbSettings;
     }
 
+    private JMenuItem getMniInfo() {
+        if (this.mniInfo == null) {
+            this.mniInfo = new JMenuItem("Info");
+            this.mniInfo.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    new InfoGui();
+                }
+            });
+        }
+        return this.mniInfo;
+    }
+
     private JMenu getMenu() {
         if (this.menu == null) {
             this.menu = new JMenu("Datei");
             this.menu.add(this.getMniSaveFile());
             this.menu.add(this.getMniLoadFile());
             this.menu.add(this.getMniDbSettings());
+            this.menu.add(this.getMniInfo());
         }
         return this.menu;
     }
