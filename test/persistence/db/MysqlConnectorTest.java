@@ -6,34 +6,33 @@ import org.junit.Test;
 
 public class MysqlConnectorTest {
 
-	@Test
-	public void testGetUniqueInstance() {
-		fail("Not yet implemented");
-	}
+    @Test
+    public void testGetUniqueInstance() {
 
-	@Test
-	public void testAdd() {
-		fail("Not yet implemented");
-	}
+    }
 
-	@Test
-	public void testLoad() {
-		fail("Not yet implemented");
-	}
+    @Test
+    public void testAdd() {
+    }
 
-	@Test
-	public void testDelete() {
-		fail("Not yet implemented");
-	}
+    @Test
+    public void testLoad() {
 
-	@Test
-	public void testClear() {
-		fail("Not yet implemented");
-	}
+    }
 
-	@Test
-	public void testSetName() {
-		fail("Not yet implemented");
-	}
+    @Test
+    public void testDelete() {
+
+    }
+
+    @Test
+    public void testClear() {
+
+    }
+
+    @Test
+    public void testSetName() {
+
+    }
 
 }

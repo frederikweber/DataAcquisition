@@ -6,20 +6,24 @@ import org.junit.Test;
 
 public class GeneratorTest {
 
-	@Test
-	public void testGetUniqueInstance() {
-		Generator generator = Generator.getUniqueInstance();
-		assertNotNull(generator);
-	}
+    @Test
+    public void testGetUniqueInstance() {
+        Generator generator = Generator.getUniqueInstance();
+        assertNotNull(generator);
+    }
 
-	@Test
-	public void testGetSinusValues() {
-		fail("Not yet implemented");
-	}
+    @Test
+    public void testGetSinusValues() {
+        Data data = Generator.getUniqueInstance().getSinusValues().get(0);
+        assertEquals(data.getX(), 0.0, 0.001);
+        assertEquals(data.getY(), 0.0, 0.001);
+    }
 
-	@Test
-	public void testGetRandomValues() {
-		fail("Not yet implemented");
-	}
+    @Test
+    public void testGetRandomValues() {
+        Data data1 = Generator.getUniqueInstance().getRandomValues().get(0);
+        Data data2 = Generator.getUniqueInstance().getRandomValues().get(0);
+        assertFalse(data1.equals(data2));
+    }
 
 }
