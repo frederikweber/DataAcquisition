@@ -10,6 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import org.apache.log4j.Logger;
+
+import com.mysql.jdbc.exceptions.jdbc4.CommunicationsException;
+import com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException;
+
 import domain.Data;
 
 public class MysqlConnector implements Database{
@@ -17,7 +22,7 @@ public class MysqlConnector implements Database{
 	private Connection connection;
 	private Properties props;
 	
-	private MysqlConnector(){
+	private MysqlConnector() throws Exception{
 		try {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			Properties properties = new Properties();
@@ -27,30 +32,18 @@ public class MysqlConnector implements Database{
 			properties.setProperty("db.user", "root");
 			properties.setProperty("db.password", "");
 			this.setProperties(properties);
-			connection = DriverManager.getConnection("jdbc:mysql://"
-					+this.props.getProperty("db.host")
-					+"/"
-					+this.props.getProperty("db.db")
-					+"?user="
-					+this.props.getProperty("db.user")
-					+"&password="
-					+this.props.getProperty("db.password"));
-		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Logger.getLogger(MysqlConnector.class).error("Die Klasse kann nicht gefunden werden", e);
+		} catch (CommunicationsException e){
+			throw e;
+		} catch (MySQLSyntaxErrorException e) {
+			throw e;
+		} catch (Exception e){
+			Logger.getLogger(MysqlConnector.class).error("Fehler beim erstellen des Objekt", e);
 		}
 	}
 
-	public static MysqlConnector getUniqueInstance(){
+	public static MysqlConnector getUniqueInstance() throws Exception{
 		if(MysqlConnector.uniqueInstance==null){
 			MysqlConnector.uniqueInstance=new MysqlConnector();
 		}
@@ -85,7 +78,28 @@ public class MysqlConnector implements Database{
 	}
 
 	@Override
-	public void setProperties(Properties props) {
-		this.props = props;		
+	public void setProperties(Properties props) throws Exception{
+		this.props = props;
+		try {
+			this.connection = DriverManager.getConnection("jdbc:mysql://"
+					+this.props.getProperty("db.host")
+					+"/"
+					+this.props.getProperty("db.db")
+					+"?user="
+					+this.props.getProperty("db.user")
+					+"&password="
+					+this.props.getProperty("db.password"));
+			this.connection.createStatement().executeQuery("SELECT * FROM " 
+					+ this.props.getProperty("db.table") 
+					+ ";");
+		} catch (CommunicationsException e){
+			Logger.getLogger(MysqlConnector.class).error("Keine Verbindung zu der Datenbank möglich", e);
+			throw e;
+		} catch (MySQLSyntaxErrorException e) {
+			Logger.getLogger(MysqlConnector.class).error("Testquery erzeugte Fehler", e);
+			throw e;
+		} catch (SQLException e) {
+			Logger.getLogger(MysqlConnector.class).error("Ein SQL Fehler ist aufgetreten", e);
+		}
 	}
 }

@@ -37,6 +37,7 @@ public class DataGui extends JFrame {
 	private JMenuBar topMenuBar;
 	private JMenuItem mniSaveFile;
 	private JMenuItem mniLoadFile;
+	private JMenuItem mniDbSettings;
 	private JMenu menu;
 	
 	private JMenuBar getTopMenuBar() {
@@ -50,13 +51,12 @@ public class DataGui extends JFrame {
 		if(mniSaveFile==null){
 			mniSaveFile=new JMenuItem("Speichere Datei");
 			mniSaveFile.addActionListener(new ActionListener() {
-				
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
 					JFileChooser fileChooser = new JFileChooser();
 					fileChooser.showSaveDialog(null);
 					Properties properties = new Properties();
-					properties.setProperty("File.name", fileChooser.getSelectedFile().getAbsolutePath());
+					properties.setProperty("file.name", fileChooser.getSelectedFile().getAbsolutePath());
 					DataManager.getUniqueInstance().saveToFile(properties);
 				}
 			});
@@ -66,14 +66,39 @@ public class DataGui extends JFrame {
 	private JMenuItem getMniLoadFile() {
 		if(mniLoadFile==null){
 			mniLoadFile=new JMenuItem("Lade Datei");
+			mniLoadFile.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					JFileChooser fileChooser = new JFileChooser();
+					fileChooser.showOpenDialog(null);
+					Properties properties = new Properties();
+					properties.setProperty("file.name", fileChooser.getSelectedFile().getAbsolutePath());
+					DataManager.getUniqueInstance().loadFromFile(properties);
+				}
+			});
 		}
 		return mniLoadFile;
 	}
+	
+	private JMenuItem getMniDbSettings(){
+		if(this.mniDbSettings == null){
+			this.mniDbSettings = new JMenuItem("Datenbankeinstellungen");
+			this.mniDbSettings.addActionListener(new ActionListener() {				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					new DatabaseSettingsGui();
+				}
+			});
+		}
+		return this.mniDbSettings;
+	}
+	
 	private JMenu getMenu() {
 		if(menu==null){
-			menu=new JMenu("Datei");
-			menu.add(getMniSaveFile());
-			menu.add(getMniLoadFile());
+			this.menu = new JMenu("Datei");
+			this.menu.add(this.getMniSaveFile());
+			this.menu.add(this.getMniLoadFile());
+			this.menu.add(this.getMniDbSettings());
 		}
 		return menu;
 	}
@@ -140,6 +165,7 @@ public class DataGui extends JFrame {
 	private JFrame getFrame() {
 		if(frame==null){
 			frame=new JFrame("DataGui");
+			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		}
 		return frame;
 	}
