@@ -37,6 +37,7 @@ public class DataManagerGui implements Observer{
 	private void initialize(){
 		getFrame().setSize(300,300);
 		getFrame().add(getTxtField());
+		this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getFrame().setVisible(true);
 	}
 
