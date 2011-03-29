@@ -6,6 +6,7 @@ import java.util.Observer;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JList;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import domain.Data;
@@ -36,7 +37,7 @@ public class DataManagerGui implements Observer{
 	
 	private void initialize(){
 		getFrame().setSize(300,300);
-		getFrame().add(getTxtField());
+		getFrame().add(new JScrollPane(getTxtField()));
 		this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getFrame().setVisible(true);
 	}

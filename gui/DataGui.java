@@ -7,10 +7,12 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import domain.Data;
 import domain.DataManager;
+import domain.Generator;
 
 public class DataGui extends JFrame {
 	private JFrame frame;
@@ -19,19 +21,49 @@ public class DataGui extends JFrame {
 	private JTextField txtX;
 	private JTextField txtY;
 	private JButton btnOk;
+	private JButton btnSinus;
+	private JButton btnRandom;
 	
 	private JButton getBtnOk() {
 		if (btnOk==null){
 			btnOk=new JButton("ok");
 			btnOk.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					DataManager.getUniqueInstance().addData(new Data(Double.parseDouble((getTxtX().getText())), Double.parseDouble(getTxtY().getText())));
+					DataManager.getUniqueInstance().addData(new Data(Double.parseDouble(getTxtX().getText()), Double.parseDouble(getTxtY().getText())));
 					getTxtY().setText("");
 					getTxtX().setText("");
 				}
 			});
 		}
 		return btnOk;
+	}
+	private JButton getBtnSinus(){
+		if(btnSinus==null){
+			btnSinus=new JButton("Sinus");
+			btnSinus.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					DataManager.getUniqueInstance().clear();
+					for(Data data:Generator.getUniqueInstance().getSinusValues()){
+						DataManager.getUniqueInstance().addData(data);
+					}
+				}
+			});
+		}
+		return btnSinus;
+	}
+	private JButton getBtnRandom(){
+		if(btnRandom==null){
+			btnRandom=new JButton("Random");
+			btnRandom.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					DataManager.getUniqueInstance().clear();
+					for(Data data:Generator.getUniqueInstance().getRandomValues()){
+						DataManager.getUniqueInstance().addData(data);
+					}
+				}
+			});
+		}
+		return btnRandom;
 	}
 	public DataGui(){
 		initialize();
@@ -69,13 +101,16 @@ public class DataGui extends JFrame {
 	private void initialize(){
 		getFrame().setLayout(new GridLayout(0,2));
 		getFrame().setSize(300,150);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getFrame().add(getLblX());
 		getFrame().add(getTxtX());
 		getFrame().add(getLblY());
 		getFrame().add(getTxtY());
 		getFrame().add(getBtnOk());
+		getFrame().add(new JPanel());
+		getFrame().add(getBtnSinus());
+		getFrame().add(getBtnRandom());
 		getFrame().setVisible(true);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		new DataManagerGui();
 		new DataPlotGui();
 		
