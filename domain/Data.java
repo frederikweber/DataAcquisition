@@ -1,6 +1,6 @@
 package domain;
 
-public class Data {
+public class Data{
 	private double x;
 	private double y;
 	
