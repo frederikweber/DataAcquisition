@@ -23,6 +23,7 @@ public class DataGui extends JFrame {
 	private JButton btnOk;
 	private JButton btnSinus;
 	private JButton btnRandom;
+	private JButton btnClear;
 	
 	private JButton getBtnOk() {
 		if (btnOk==null){
@@ -64,6 +65,17 @@ public class DataGui extends JFrame {
 			});
 		}
 		return btnRandom;
+	}
+	private JButton getBtnClear(){
+		if(btnClear==null){
+			btnClear=new JButton("clear");
+			btnClear.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					DataManager.getUniqueInstance().clear();
+				}
+			});
+		}
+		return btnClear;
 	}
 	public DataGui(){
 		initialize();
@@ -107,7 +119,7 @@ public class DataGui extends JFrame {
 		getFrame().add(getLblY());
 		getFrame().add(getTxtY());
 		getFrame().add(getBtnOk());
-		getFrame().add(new JPanel());
+		getFrame().add(getBtnClear());
 		getFrame().add(getBtnSinus());
 		getFrame().add(getBtnRandom());
 		getFrame().setVisible(true);

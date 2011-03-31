@@ -26,5 +26,7 @@ public class DataManager extends Observable{
 	}
 	public void clear(){
 		this.dataList=new ArrayList<Data>();
+		this.setChanged();
+		this.notifyObservers();
 	}
 }
