@@ -14,12 +14,15 @@ import java.util.Observer;
 
 import javax.swing.JComponent;
 
+import org.apache.log4j.Logger;
+
 import domain.Data;
 import domain.DataManager;
 
 public class DataPlot extends JComponent implements Observer{
 	public DataPlot(){
 		DataManager.getUniqueInstance().addObserver(this);
+		Logger.getLogger(DataPlot.class).trace("Neues DataPlot Objekt wurde erzeugt");
 	}
 	protected void paintComponent(Graphics g){
 		int w=this.getWidth();
@@ -54,6 +57,7 @@ public class DataPlot extends JComponent implements Observer{
 			int gy=(int)(data.getY()*yScale+gY0);
 			g.drawLine(gx, gy, gx, gy);
 		}	
+		Logger.getLogger(DataPlot.class).trace("Die Daten wurden neu gezeichnet");
 	}
 	public void update(Observable arg0, Object arg1) {
 		this.repaint();

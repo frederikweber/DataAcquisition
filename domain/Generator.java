@@ -2,10 +2,12 @@ package domain;
 
 import java.util.ArrayList;
 
+import org.apache.log4j.Logger;
+
 public class Generator {
 	private static Generator uniqueInstance;
 	private Generator(){
-		
+		Logger.getLogger(Generator.class).trace("Neues Generator Objekt");
 	}
 	public static Generator getUniqueInstance(){
 		if(Generator.uniqueInstance==null){
@@ -18,6 +20,7 @@ public class Generator {
 		for(double i=0;i<2*Math.PI;i+=0.1){
 			dataList.add(new Data(i,Math.sin(i)));
 		}
+		Logger.getLogger(Generator.class).trace("Sinus Daten zurückgegeben");
 		return dataList;
 	}
 	public ArrayList<Data> getRandomValues(){
@@ -37,6 +40,7 @@ public class Generator {
 			zufall2*=10;
 			dataList.add(new Data(zufall1,zufall2));		
 		}
+		Logger.getLogger(Generator.class).trace("Random Daten zurückgegeben");
 		return dataList;
 	}
 }

@@ -10,6 +10,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import org.apache.log4j.Logger;
+
 import domain.Data;
 import domain.DataManager;
 import domain.Generator;
@@ -30,6 +32,7 @@ public class DataGui extends JFrame {
 			btnOk=new JButton("ok");
 			btnOk.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					Logger.getLogger(DataGui.class).trace("Neue Daten werden hinzugefügt");
 					DataManager.getUniqueInstance().addData(new Data(Double.parseDouble(getTxtX().getText()), Double.parseDouble(getTxtY().getText())));
 					getTxtY().setText("");
 					getTxtX().setText("");
@@ -43,6 +46,7 @@ public class DataGui extends JFrame {
 			btnSinus=new JButton("Sinus");
 			btnSinus.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					Logger.getLogger(DataGui.class).trace("Sinus Daten werden hinzugefügt");
 					DataManager.getUniqueInstance().clear();
 					for(Data data:Generator.getUniqueInstance().getSinusValues()){
 						DataManager.getUniqueInstance().addData(data);
@@ -57,6 +61,7 @@ public class DataGui extends JFrame {
 			btnRandom=new JButton("Random");
 			btnRandom.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					Logger.getLogger(DataGui.class).trace("Random Daten werden hinzugefügt");
 					DataManager.getUniqueInstance().clear();
 					for(Data data:Generator.getUniqueInstance().getRandomValues()){
 						DataManager.getUniqueInstance().addData(data);
@@ -71,6 +76,7 @@ public class DataGui extends JFrame {
 			btnClear=new JButton("clear");
 			btnClear.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					Logger.getLogger(DataGui.class).trace("Daten werden entfernt");
 					DataManager.getUniqueInstance().clear();
 				}
 			});
@@ -79,6 +85,7 @@ public class DataGui extends JFrame {
 	}
 	public DataGui(){
 		initialize();
+		Logger.getLogger(DataGui.class).trace("Neues DataGui Objekt erzeugt");
 	}
 	private JFrame getFrame() {
 		if(frame==null){
