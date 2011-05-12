@@ -1,12 +1,17 @@
 package gui;
 
+import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.MenuItem;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -26,7 +31,38 @@ public class DataGui extends JFrame {
 	private JButton btnSinus;
 	private JButton btnRandom;
 	private JButton btnClear;
+	private JMenuBar topMenuBar;
+	private JMenuItem mniSaveFile;
+	private JMenuItem mniLoadFile;
+	private JMenu menu;
 	
+	private JMenuBar getTopMenuBar() {
+		if(topMenuBar==null){
+			topMenuBar=new JMenuBar();
+			topMenuBar.add(getMenu());
+		}
+		return topMenuBar;
+	}
+	private JMenuItem getMniSaveFile() {
+		if(mniSaveFile==null){
+			mniSaveFile=new JMenuItem("Speichere Datei");
+		}
+		return mniSaveFile;
+	}
+	private JMenuItem getMniLoadFile() {
+		if(mniLoadFile==null){
+			mniLoadFile=new JMenuItem("Lade Datei");
+		}
+		return mniLoadFile;
+	}
+	private JMenu getMenu() {
+		if(menu==null){
+			menu=new JMenu("Datei");
+			menu.add(getMniSaveFile());
+			menu.add(getMniLoadFile());
+		}
+		return menu;
+	}
 	private JButton getBtnOk() {
 		if (btnOk==null){
 			btnOk=new JButton("ok");
@@ -118,21 +154,23 @@ public class DataGui extends JFrame {
 		return txtY;
 	}
 	private void initialize(){
-		getFrame().setLayout(new GridLayout(0,2));
+		JPanel pnl = new JPanel();
+		pnl.setLayout(new GridLayout(0,2));
 		getFrame().setSize(300,150);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		getFrame().add(getLblX());
-		getFrame().add(getTxtX());
-		getFrame().add(getLblY());
-		getFrame().add(getTxtY());
-		getFrame().add(getBtnOk());
-		getFrame().add(getBtnClear());
-		getFrame().add(getBtnSinus());
-		getFrame().add(getBtnRandom());
+		getFrame().add(getTopMenuBar(), BorderLayout.NORTH);
+		getFrame().add(pnl, BorderLayout.CENTER);
+		pnl.add(getLblX());
+		pnl.add(getTxtX());
+		pnl.add(getLblY());
+		pnl.add(getTxtY());
+		pnl.add(getBtnOk());
+		pnl.add(getBtnClear());
+		pnl.add(getBtnSinus());
+		pnl.add(getBtnRandom());
 		getFrame().setVisible(true);
-		new DataManagerGui();
 		new DataPlotGui();
-		
+		new DataManagerGui();
 	}
 	
 	

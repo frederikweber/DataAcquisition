@@ -1,5 +1,7 @@
 package gui;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -34,7 +36,7 @@ public class DataManagerGui implements Observer{
 	private JList getTxtField() {
 		if(txtField==null){
 			txtField=new JList(this.defaultListModel);
-		}
+		}	
 		return txtField;
 	}
 	
@@ -43,6 +45,7 @@ public class DataManagerGui implements Observer{
 		getFrame().add(new JScrollPane(getTxtField()));
 		this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getFrame().setVisible(true);
+		this.update(null, null);
 	}
 
 	public void update(Observable arg0, Object arg1) {
