@@ -5,17 +5,9 @@ import java.util.ArrayList;
 import org.apache.log4j.Logger;
 
 public class Generator {
-    private static Generator uniqueInstance;
 
     private Generator() {
-        Logger.getLogger(Generator.class).trace("Neues Generator Objekt");
-    }
 
-    public static Generator getUniqueInstance() {
-        if (Generator.uniqueInstance == null) {
-            Generator.uniqueInstance = new Generator();
-        }
-        return Generator.uniqueInstance;
     }
 
     /**
@@ -23,7 +15,7 @@ public class Generator {
      *
      * @return Eine Liste mit Sinuswerten
      */
-    public ArrayList<Data> getSinusValues() {
+    public static ArrayList<Data> getSinusValues() {
         ArrayList<Data> dataList = new ArrayList<Data>();
         for (double i = 0; i < 2 * Math.PI; i += 0.1) {
             dataList.add(new Data(i, Math.sin(i)));
@@ -37,7 +29,7 @@ public class Generator {
      *
      * @return Eine Liste mit Zufallswerten
      */
-    public ArrayList<Data> getRandomValues() {
+    public static ArrayList<Data> getRandomValues() {
         ArrayList<Data> dataList = new ArrayList<Data>();
         for (int i = 0; i < 111; i++) {
             double negativ1 = Math.random();

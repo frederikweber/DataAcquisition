@@ -126,7 +126,7 @@ public class DataGui extends JFrame {
                 public void actionPerformed(ActionEvent e) {
                     Logger.getLogger(DataGui.class).trace("Sinus Daten werden hinzugefügt");
                     DataManager.getUniqueInstance().clear();
-                    for (Data data : Generator.getUniqueInstance().getSinusValues()) {
+                    for (Data data : Generator.getSinusValues()) {
                         DataManager.getUniqueInstance().addData(data);
                     }
                 }
@@ -142,7 +142,7 @@ public class DataGui extends JFrame {
                 public void actionPerformed(ActionEvent e) {
                     Logger.getLogger(DataGui.class).trace("Random Daten werden hinzugefügt");
                     DataManager.getUniqueInstance().clear();
-                    for (Data data : Generator.getUniqueInstance().getRandomValues()) {
+                    for (Data data : Generator.getRandomValues()) {
                         DataManager.getUniqueInstance().addData(data);
                     }
                 }
@@ -208,10 +208,10 @@ public class DataGui extends JFrame {
     private void initialize() {
         JPanel pnl = new JPanel();
         pnl.setLayout(new GridLayout(0, 2));
-        getFrame().setSize(300, 150);
+        this.getFrame().setSize(300, 150);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        getFrame().add(this.getTopMenuBar(), BorderLayout.NORTH);
-        getFrame().add(pnl, BorderLayout.CENTER);
+        this.getFrame().add(this.getTopMenuBar(), BorderLayout.NORTH);
+        this.getFrame().add(pnl, BorderLayout.CENTER);
         pnl.add(this.getLblX());
         pnl.add(this.getTxtX());
         pnl.add(this.getLblY());
