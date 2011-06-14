@@ -91,6 +91,8 @@ public class DataManager extends Observable {
         } catch (Exception e) {
             Logger.getLogger(DataManager.class).error("Fehler beim löschen", e);
         }
+        this.setChanged();
+        this.notifyObservers();
         Logger.getLogger(DataManager.class).trace("Ein Datensatz gelöscht");
     }
 

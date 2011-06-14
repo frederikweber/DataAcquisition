@@ -33,15 +33,16 @@ public class DataManagerGui implements Observer {
     private JList getTxtField() {
         if (this.txtField == null) {
             this.txtField = new JList(this.defaultListModel);
+            this.txtField.setComponentPopupMenu(new DataManagerPopupMenu(this.txtField));
         }
         return this.txtField;
     }
 
     private void initialize() {
-        getFrame().setSize(300, 300);
-        getFrame().add(new JScrollPane(getTxtField()));
+        this.getFrame().setSize(300, 300);
+        this.getFrame().add(new JScrollPane(this.getTxtField()));
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        getFrame().setVisible(true);
+        this.getFrame().setVisible(true);
         this.update(null, null);
     }
 

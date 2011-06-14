@@ -4,10 +4,10 @@ import org.apache.log4j.Logger;
 
 
 public class Data {
-    private double x;
-    private double y;
+    final private double x;
+    final private double y;
 
-    public Data(double x, double y) {
+    public Data(final double x, final double y) {
         this.x = x;
         this.y = y;
         Logger.getLogger(Data.class).trace("Neues Data Objekt " + this.toString());
@@ -17,16 +17,8 @@ public class Data {
         return this.x;
     }
 
-    public void setX(double x) {
-        this.x = x;
-    }
-
     public double getY() {
         return this.y;
-    }
-
-    public void setY(double y) {
-        this.y = y;
     }
 
     @Override
