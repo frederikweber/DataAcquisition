@@ -11,7 +11,10 @@ import java.util.Observable;
 import java.util.Observer;
 
 public class DataPlot extends JComponent implements Observer {
+    private Color color = Color.RED;
+
     public DataPlot() {
+        this.setComponentPopupMenu(new DataPlotPopupMenu(this));
         DataManager.getUniqueInstance().addObserver(this);
         Logger.getLogger(DataPlot.class).trace("Neues DataPlot Objekt");
     }
@@ -22,7 +25,7 @@ public class DataPlot extends JComponent implements Observer {
         g.drawLine(w / 2, 0, w / 2, h);
         g.drawLine(0, h / 2, w, h / 2);
 
-        g.setColor(Color.RED);
+        g.setColor(this.color);
 
         int gX0 = w / 2;
         int gY0 = h / 2;
@@ -50,6 +53,11 @@ public class DataPlot extends JComponent implements Observer {
     }
 
     public void update(Observable arg0, Object arg1) {
+        this.repaint();
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
         this.repaint();
     }
 }
