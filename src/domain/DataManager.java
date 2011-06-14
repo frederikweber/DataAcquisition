@@ -40,7 +40,6 @@ public class DataManager extends Observable {
      * @param data Das Data Objekt
      */
     public void addData(Data data) {
-        this.dataList.add(data);
         try {
             this.database.add(data);
         } catch (Exception e) {
@@ -63,6 +62,7 @@ public class DataManager extends Observable {
             Logger.getLogger(DataManager.class).error("Fehler beim laden", e);
         }
         Logger.getLogger(DataManager.class).trace("DataList zurückgegeben");
+        Logger.getLogger(DataManager.class).trace("Anzahl Einträge in DataList: " + this.dataList.size());
         return this.dataList;
     }
 
@@ -70,7 +70,6 @@ public class DataManager extends Observable {
      * Löscht alle Daten in der Liste.
      */
     public void clear() {
-        this.dataList = new ArrayList<Data>();
         try {
             this.database.clear();
         } catch (Exception e) {

@@ -20,6 +20,7 @@ public class DataManagerTest {
     @Test
     public void testAddData() {
         DataManager.getUniqueInstance().addData(new Data(3.3, 3.3));
+        assertEquals(DataManager.getUniqueInstance().getDataList().size(), 1);
         assertEquals(3.3, DataManager.getUniqueInstance().getDataList().get(0).getX(), 0.001);
         assertEquals(3.3, DataManager.getUniqueInstance().getDataList().get(0).getY(), 0.001);
     }
