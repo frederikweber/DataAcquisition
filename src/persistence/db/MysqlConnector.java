@@ -52,13 +52,13 @@ public class MysqlConnector implements Database {
 
     @Override
     public void add(Data data) throws SQLException {
-        Statement statement = connection.createStatement();
+        Statement statement = this.connection.createStatement();
         statement.execute("INSERT INTO " + this.props.getProperty("db.table") + "(x,y) VALUES ('" + data.getX() + "','" + data.getY() + "');");
     }
 
     @Override
     public List<Data> load() throws SQLException {
-        Statement statement = connection.createStatement();
+        Statement statement = this.connection.createStatement();
         ResultSet resultSet = statement.executeQuery("SELECT * FROM " + this.props.getProperty("db.table") + ";");
         List<Data> arrayList = new ArrayList<Data>();
         while (resultSet.next()) {
@@ -67,16 +67,24 @@ public class MysqlConnector implements Database {
         return arrayList;
     }
 
+    @Override
     public void delete(Data data) throws SQLException {
-        Statement statement = connection.createStatement();
+        Statement statement = this.connection.createStatement();
         statement.execute("DELETE FROM " + this.props.getProperty("db.table") + " WHERE x=" + data.getX() + " AND y=" + data.getY() + ";");
     }
 
+    @Override
     public void clear() throws SQLException {
-        Statement statement = connection.createStatement();
+        Statement statement = this.connection.createStatement();
         statement.execute("DELETE FROM " + this.props.getProperty("db.table") + ";");
     }
 
+    /**
+     * Setzt neue Eigenschaften.
+     *
+     * @param props db.host für Datenbankhost, db.db für Datenbank, db.user für User, db.password für Passwort, db.table für Tabelle
+     * @throws Exception
+     */
     @Override
     public void setProperties(Properties props) throws Exception {
         this.props = props;
@@ -93,7 +101,7 @@ public class MysqlConnector implements Database {
                     + this.props.getProperty("db.table")
                     + ";");
         } catch (CommunicationsException e) {
-            Logger.getLogger(MysqlConnector.class).error("Keine Verbindung zu der Datenbank m�glich", e);
+            Logger.getLogger(MysqlConnector.class).error("Keine Verbindung zu der Datenbank möglich", e);
             throw e;
         } catch (MySQLSyntaxErrorException e) {
             Logger.getLogger(MysqlConnector.class).error("Testquery erzeugte Fehler", e);

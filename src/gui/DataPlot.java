@@ -4,15 +4,16 @@ import domain.Data;
 import domain.DataManager;
 import org.apache.log4j.Logger;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JComponent;
+import java.awt.Color;
+import java.awt.Graphics;
 import java.util.Observable;
 import java.util.Observer;
 
 public class DataPlot extends JComponent implements Observer {
     public DataPlot() {
         DataManager.getUniqueInstance().addObserver(this);
-        Logger.getLogger(DataPlot.class).trace("Neues DataPlot Objekt wurde erzeugt");
+        Logger.getLogger(DataPlot.class).trace("Neues DataPlot Objekt");
     }
 
     protected void paintComponent(Graphics g) {
@@ -22,9 +23,6 @@ public class DataPlot extends JComponent implements Observer {
         g.drawLine(0, h / 2, w, h / 2);
 
         g.setColor(Color.RED);
-
-        double a = -Math.PI;
-        double b = Math.PI;
 
         int gX0 = w / 2;
         int gY0 = h / 2;

@@ -2,6 +2,7 @@ package domain;
 
 import org.apache.log4j.Logger;
 
+
 public class Data {
     private double x;
     private double y;
@@ -9,11 +10,11 @@ public class Data {
     public Data(double x, double y) {
         this.x = x;
         this.y = y;
-        Logger.getLogger(Data.class).trace("Neues Data Objekt X:" + x + " Y:" + y);
+        Logger.getLogger(Data.class).trace("Neues Data Objekt " + this.toString());
     }
 
     public double getX() {
-        return x;
+        return this.x;
     }
 
     public void setX(double x) {
@@ -21,10 +22,50 @@ public class Data {
     }
 
     public double getY() {
-        return y;
+        return this.y;
     }
 
     public void setY(double y) {
         this.y = y;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || this.getClass() != o.getClass()) {
+            return false;
+        }
+
+        Data data = (Data) o;
+
+        if (Double.compare(data.x, this.x) != 0) {
+            return false;
+        }
+        if (Double.compare(data.y, this.y) != 0) {
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Data{" +
+                "x=" + this.x +
+                ", y=" + this.y +
+                '}';
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        temp = this.x != +0.0d ? Double.doubleToLongBits(this.x) : 0L;
+        result = (int) (temp ^ (temp >>> 32));
+        temp = this.y != +0.0d ? Double.doubleToLongBits(this.y) : 0L;
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        return result;
     }
 }

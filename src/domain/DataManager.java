@@ -37,7 +37,7 @@ public class DataManager extends Observable {
     /**
      * Fügt neue Daten hinzu.
      *
-     * @param data
+     * @param data Das Data Objekt
      */
     public void addData(Data data) {
         this.dataList.add(data);
@@ -48,7 +48,7 @@ public class DataManager extends Observable {
         }
         this.setChanged();
         this.notifyObservers();
-        Logger.getLogger(DataManager.class).trace("Neues Data Objekt im DataManager aufgenommen");
+        Logger.getLogger(DataManager.class).trace("Neues Data Objekt im DataManager aufgenommen " + data.toString());
     }
 
     /**
@@ -62,7 +62,7 @@ public class DataManager extends Observable {
         } catch (Exception e) {
             Logger.getLogger(DataManager.class).error("Fehler beim laden", e);
         }
-        Logger.getLogger(DataManager.class).trace("DataList zur�ckgegeben");
+        Logger.getLogger(DataManager.class).trace("DataList zurückgegeben");
         return this.dataList;
     }
 
@@ -78,24 +78,28 @@ public class DataManager extends Observable {
         }
         this.setChanged();
         this.notifyObservers();
-        Logger.getLogger(DataManager.class).trace("DataList gel�scht");
+        Logger.getLogger(DataManager.class).trace("DataList gelöscht");
     }
 
     /**
      * Löscht ein spezielles Datenobjekt.
      *
-     * @param data Das zu löschende Datenobjekt.
+     * @param data Das zu löschende Datenobjekt
      */
     public void delete(Data data) {
         try {
             this.database.delete(data);
         } catch (Exception e) {
-            Logger.getLogger(DataManager.class).error("Fehler beim l�schen", e);
+            Logger.getLogger(DataManager.class).error("Fehler beim löschen", e);
         }
-        Logger.getLogger(DataManager.class).trace("Ein Datensatz gel�scht");
+        Logger.getLogger(DataManager.class).trace("Ein Datensatz gelöscht");
     }
 
-
+    /**
+     * Speichert die Daten in eine Datei.
+     *
+     * @param props Die Eigenschaften der Datei
+     */
     public void saveToFile(Properties props) {
         Database temp = this.database;
         this.database = CSV.getUniqueInstance();
@@ -113,6 +117,11 @@ public class DataManager extends Observable {
         Logger.getLogger(DataManager.class).trace("In eine Datei gespeichert");
     }
 
+    /**
+     * Lädt Daten aus einer Datei.
+     *
+     * @param props Die Eigenschaften der Datei
+     */
     public void loadFromFile(Properties props) {
         Database temp = this.database;
         this.database = CSV.getUniqueInstance();
@@ -132,6 +141,11 @@ public class DataManager extends Observable {
         this.notifyObservers();
     }
 
+    /**
+     * Ändert die Eigenschaften der Datenbank welche vom DataManager gebraucht wird.
+     *
+     * @param props Die neuen Eigenschaften
+     */
     public void changeProperties(Properties props) {
         try {
             this.database.setProperties(props);

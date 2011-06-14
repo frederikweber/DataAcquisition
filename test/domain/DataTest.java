@@ -12,6 +12,7 @@ public class DataTest {
         assertNotNull(data);
         assertEquals(3.3, data.getX(), 0.001);
         assertEquals(3.3, data.getY(), 0.001);
+        assertTrue(data.equals(new Data(3.3, 3.3)));
     }
 
 }

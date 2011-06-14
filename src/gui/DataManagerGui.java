@@ -4,7 +4,10 @@ import domain.Data;
 import domain.DataManager;
 import org.apache.log4j.Logger;
 
-import javax.swing.*;
+import javax.swing.DefaultListModel;
+import javax.swing.JFrame;
+import javax.swing.JList;
+import javax.swing.JScrollPane;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -15,23 +18,23 @@ public class DataManagerGui implements Observer {
     private DefaultListModel defaultListModel = new DefaultListModel();
 
     public DataManagerGui() {
-        initialize();
+        this.initialize();
         DataManager.getUniqueInstance().addObserver(this);
-        Logger.getLogger(DataManagerGui.class).trace("Neues DataManagerGui Objekt erstellt");
+        Logger.getLogger(DataManagerGui.class).trace("Neues DataManagerGui Objekt");
     }
 
     private JFrame getFrame() {
-        if (frame == null) {
-            frame = new JFrame("DataManager");
+        if (this.frame == null) {
+            this.frame = new JFrame("DataManager");
         }
-        return frame;
+        return this.frame;
     }
 
     private JList getTxtField() {
-        if (txtField == null) {
-            txtField = new JList(this.defaultListModel);
+        if (this.txtField == null) {
+            this.txtField = new JList(this.defaultListModel);
         }
-        return txtField;
+        return this.txtField;
     }
 
     private void initialize() {

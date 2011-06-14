@@ -7,15 +7,10 @@ import gui.DataGui;
 import gui.DataPlotGui;
 
 public class Test {
-
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		DOMConfigurator.configure("log.xml");
-		DataGui dataGui=new DataGui();
-		Logger.getLogger(Test.class).info("Programm gestartet");
-	}
+    public static void main(String[] args) {
+        DOMConfigurator.configure("log.xml");
+        new DataGui();
+        Logger.getLogger(Test.class).info("Programm gestartet");
+    }
 
 }

@@ -25,23 +25,26 @@ public class CSV implements Database {
         return CSV.uniqueInstance;
     }
 
+    @Override
     public void add(Data data) throws Exception {
         File file = new File(this.props.getProperty("file.name"));
         file.createNewFile();
         FileInputStream inputStream = new FileInputStream(file);
         byte[] input = new byte[(int) file.length()];
         inputStream.read(input);
+        inputStream.close();
         String newString = new String(input);
         newString += ";" + data.getX() + "," + data.getY();
         FileOutputStream outputStream = new FileOutputStream(file);
         outputStream.write(newString.getBytes());
-        Logger.getLogger(CSV.class).trace("Datensatz der Datei hinzugef�gt");
+        outputStream.close();
+        Logger.getLogger(CSV.class).trace("Datensatz der Datei hinzugefügt");
     }
 
     @Override
     public void clear() throws Exception {
         new File(this.props.getProperty("file.name")).delete();
-        Logger.getLogger(CSV.class).trace("Datei wurde gel�scht");
+        Logger.getLogger(CSV.class).trace("Datei wurde gelöscht");
     }
 
     @Override
@@ -50,11 +53,13 @@ public class CSV implements Database {
         FileInputStream inputStream = new FileInputStream(file);
         byte[] input = new byte[(int) file.length()];
         inputStream.read(input);
+        inputStream.close();
         String newString = new String(input);
-        newString.replace(";" + data.getX() + "," + data.getY(), "");
+        newString = newString.replace(";" + data.getX() + "," + data.getY(), "");
         FileOutputStream outputStream = new FileOutputStream(file);
         outputStream.write(newString.getBytes());
-        Logger.getLogger(CSV.class).trace("Ein Datensatz gel�scht");
+        outputStream.close();
+        Logger.getLogger(CSV.class).trace("Ein Datensatz gelöscht");
     }
 
     @Override
@@ -63,6 +68,7 @@ public class CSV implements Database {
         FileInputStream inputStream = new FileInputStream(file);
         byte[] input = new byte[(int) file.length()];
         inputStream.read(input);
+        inputStream.close();
         String newString = new String(input);
         String[] splitted = newString.split(";");
         List<Data> returnData = new ArrayList<Data>();
@@ -76,6 +82,11 @@ public class CSV implements Database {
         return returnData;
     }
 
+    /**
+     * Setzt neue Eigenschaften.
+     *
+     * @param props file.name für Dateiname
+     */
     @Override
     public void setProperties(Properties props) {
         this.props = props;

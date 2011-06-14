@@ -1,20 +1,18 @@
 package gui;
 
-import java.awt.BorderLayout;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Properties;
+import domain.DataManager;
+import org.apache.log4j.Logger;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
-import sun.net.www.protocol.http.InMemoryCookieStore;
-
-import domain.DataManager;
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Properties;
 
 public class DatabaseSettingsGui extends JFrame {
 
@@ -37,6 +35,7 @@ public class DatabaseSettingsGui extends JFrame {
                 props.setProperty("db.table", inputTable.getText());
                 props.setProperty("db.user", inputUser.getText());
                 props.setProperty("db.password", inputPassword.getText());
+                Logger.getLogger(DatabaseSettingsGui.class).trace("Die Datenbankeinstellungen werden neu gesetzt");
                 DataManager.getUniqueInstance().changeProperties(props);
                 invisible();
             }
@@ -56,8 +55,12 @@ public class DatabaseSettingsGui extends JFrame {
         this.add(button, BorderLayout.SOUTH);
 
         this.setVisible(true);
+        Logger.getLogger(DatabaseSettingsGui.class).trace("Neues DatabaseSettingsGui Objekt");
     }
 
+    /**
+     * Macht das Fenster unsichtbar.
+     */
     private void invisible() {
         this.setVisible(false);
     }

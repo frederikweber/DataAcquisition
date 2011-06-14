@@ -1,10 +1,10 @@
 package persistence.db;
 
+import domain.Data;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-
-import domain.Data;
 
 public class Dummy implements Database {
     private static Dummy uniqueInstance;

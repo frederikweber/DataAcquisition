@@ -1,11 +1,9 @@
 package gui;
 
-import java.awt.BorderLayout;
-import java.awt.GridLayout;
-import java.awt.MenuItem;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Properties;
+import domain.Data;
+import domain.DataManager;
+import domain.Generator;
+import org.apache.log4j.Logger;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -14,15 +12,14 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
-import org.apache.log4j.Logger;
-
-
-import domain.Data;
-import domain.DataManager;
-import domain.Generator;
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Properties;
 
 public class DataGui extends JFrame {
     private JFrame frame;
@@ -41,17 +38,17 @@ public class DataGui extends JFrame {
     private JMenu menu;
 
     private JMenuBar getTopMenuBar() {
-        if (topMenuBar == null) {
-            topMenuBar = new JMenuBar();
-            topMenuBar.add(getMenu());
+        if (this.topMenuBar == null) {
+            this.topMenuBar = new JMenuBar();
+            this.topMenuBar.add(getMenu());
         }
-        return topMenuBar;
+        return this.topMenuBar;
     }
 
     private JMenuItem getMniSaveFile() {
-        if (mniSaveFile == null) {
-            mniSaveFile = new JMenuItem("Speichere Datei");
-            mniSaveFile.addActionListener(new ActionListener() {
+        if (this.mniSaveFile == null) {
+            this.mniSaveFile = new JMenuItem("Speichere Datei");
+            this.mniSaveFile.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent arg0) {
                     JFileChooser fileChooser = new JFileChooser();
                     fileChooser.showSaveDialog(null);
@@ -61,13 +58,13 @@ public class DataGui extends JFrame {
                 }
             });
         }
-        return mniSaveFile;
+        return this.mniSaveFile;
     }
 
     private JMenuItem getMniLoadFile() {
-        if (mniLoadFile == null) {
-            mniLoadFile = new JMenuItem("Lade Datei");
-            mniLoadFile.addActionListener(new ActionListener() {
+        if (this.mniLoadFile == null) {
+            this.mniLoadFile = new JMenuItem("Lade Datei");
+            this.mniLoadFile.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent arg0) {
                     JFileChooser fileChooser = new JFileChooser();
                     fileChooser.showOpenDialog(null);
@@ -77,7 +74,7 @@ public class DataGui extends JFrame {
                 }
             });
         }
-        return mniLoadFile;
+        return this.mniLoadFile;
     }
 
     private JMenuItem getMniDbSettings() {
@@ -93,36 +90,41 @@ public class DataGui extends JFrame {
     }
 
     private JMenu getMenu() {
-        if (menu == null) {
+        if (this.menu == null) {
             this.menu = new JMenu("Datei");
             this.menu.add(this.getMniSaveFile());
             this.menu.add(this.getMniLoadFile());
             this.menu.add(this.getMniDbSettings());
         }
-        return menu;
+        return this.menu;
     }
 
     private JButton getBtnOk() {
-        if (btnOk == null) {
-            btnOk = new JButton("ok");
-            btnOk.addActionListener(new ActionListener() {
+        if (this.btnOk == null) {
+            this.btnOk = new JButton("ok");
+            this.btnOk.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    Logger.getLogger(DataGui.class).trace("Neue Daten werden hinzugef�gt");
-                    DataManager.getUniqueInstance().addData(new Data(Double.parseDouble(getTxtX().getText()), Double.parseDouble(getTxtY().getText())));
+                    Logger.getLogger(DataGui.class).trace("Neue Daten werden hinzugefügt");
+                    try {
+                        DataManager.getUniqueInstance().addData(new Data(Double.parseDouble(getTxtX().getText()), Double.parseDouble(getTxtY().getText())));
+                    } catch (NumberFormatException e1) {
+                        Logger.getLogger(DataGui.class).info("Es wurden ungültige Werte eingegeben", e1);
+                        JOptionPane.showMessageDialog(null, "Bitte geben Sie gültige Werte ein.", "Ungültige Werte eingegeben", JOptionPane.ERROR_MESSAGE);
+                    }
                     getTxtY().setText("");
                     getTxtX().setText("");
                 }
             });
         }
-        return btnOk;
+        return this.btnOk;
     }
 
     private JButton getBtnSinus() {
-        if (btnSinus == null) {
-            btnSinus = new JButton("Sinus");
-            btnSinus.addActionListener(new ActionListener() {
+        if (this.btnSinus == null) {
+            this.btnSinus = new JButton("Sinus");
+            this.btnSinus.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    Logger.getLogger(DataGui.class).trace("Sinus Daten werden hinzugef�gt");
+                    Logger.getLogger(DataGui.class).trace("Sinus Daten werden hinzugefügt");
                     DataManager.getUniqueInstance().clear();
                     for (Data data : Generator.getUniqueInstance().getSinusValues()) {
                         DataManager.getUniqueInstance().addData(data);
@@ -130,15 +132,15 @@ public class DataGui extends JFrame {
                 }
             });
         }
-        return btnSinus;
+        return this.btnSinus;
     }
 
     private JButton getBtnRandom() {
-        if (btnRandom == null) {
-            btnRandom = new JButton("Random");
-            btnRandom.addActionListener(new ActionListener() {
+        if (this.btnRandom == null) {
+            this.btnRandom = new JButton("Random");
+            this.btnRandom.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    Logger.getLogger(DataGui.class).trace("Random Daten werden hinzugef�gt");
+                    Logger.getLogger(DataGui.class).trace("Random Daten werden hinzugefügt");
                     DataManager.getUniqueInstance().clear();
                     for (Data data : Generator.getUniqueInstance().getRandomValues()) {
                         DataManager.getUniqueInstance().addData(data);
@@ -146,61 +148,61 @@ public class DataGui extends JFrame {
                 }
             });
         }
-        return btnRandom;
+        return this.btnRandom;
     }
 
     private JButton getBtnClear() {
-        if (btnClear == null) {
-            btnClear = new JButton("clear");
-            btnClear.addActionListener(new ActionListener() {
+        if (this.btnClear == null) {
+            this.btnClear = new JButton("clear");
+            this.btnClear.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     Logger.getLogger(DataGui.class).trace("Daten werden entfernt");
                     DataManager.getUniqueInstance().clear();
                 }
             });
         }
-        return btnClear;
+        return this.btnClear;
     }
 
     public DataGui() {
-        initialize();
-        Logger.getLogger(DataGui.class).trace("Neues DataGui Objekt erzeugt");
+        this.initialize();
+        Logger.getLogger(DataGui.class).trace("Neues DataGui Objekt");
     }
 
     private JFrame getFrame() {
-        if (frame == null) {
-            frame = new JFrame("DataGui");
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        if (this.frame == null) {
+            this.frame = new JFrame("DataGui");
+            this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         }
-        return frame;
+        return this.frame;
     }
 
     private JLabel getLblX() {
-        if (lblX == null) {
-            lblX = new JLabel("X:");
+        if (this.lblX == null) {
+            this.lblX = new JLabel("X:");
         }
-        return lblX;
+        return this.lblX;
     }
 
     private JLabel getLblY() {
-        if (lblY == null) {
-            lblY = new JLabel("Y:");
+        if (this.lblY == null) {
+            this.lblY = new JLabel("Y:");
         }
-        return lblY;
+        return this.lblY;
     }
 
     private JTextField getTxtX() {
-        if (txtX == null) {
-            txtX = new JTextField();
+        if (this.txtX == null) {
+            this.txtX = new JTextField();
         }
-        return txtX;
+        return this.txtX;
     }
 
     private JTextField getTxtY() {
-        if (txtY == null) {
-            txtY = new JTextField();
+        if (this.txtY == null) {
+            this.txtY = new JTextField();
         }
-        return txtY;
+        return this.txtY;
     }
 
     private void initialize() {
@@ -208,17 +210,17 @@ public class DataGui extends JFrame {
         pnl.setLayout(new GridLayout(0, 2));
         getFrame().setSize(300, 150);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        getFrame().add(getTopMenuBar(), BorderLayout.NORTH);
+        getFrame().add(this.getTopMenuBar(), BorderLayout.NORTH);
         getFrame().add(pnl, BorderLayout.CENTER);
-        pnl.add(getLblX());
-        pnl.add(getTxtX());
-        pnl.add(getLblY());
-        pnl.add(getTxtY());
-        pnl.add(getBtnOk());
-        pnl.add(getBtnClear());
-        pnl.add(getBtnSinus());
-        pnl.add(getBtnRandom());
-        getFrame().setVisible(true);
+        pnl.add(this.getLblX());
+        pnl.add(this.getTxtX());
+        pnl.add(this.getLblY());
+        pnl.add(this.getTxtY());
+        pnl.add(this.getBtnOk());
+        pnl.add(this.getBtnClear());
+        pnl.add(this.getBtnSinus());
+        pnl.add(this.getBtnRandom());
+        this.getFrame().setVisible(true);
         new DataPlotGui();
         new DataManagerGui();
     }
